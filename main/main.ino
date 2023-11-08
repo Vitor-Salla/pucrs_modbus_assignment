@@ -39,25 +39,12 @@ void setup() {
   modbus.configureHoldingRegisters(lm35values.uint16Value, 2); // potenciometro float
   modbus.begin(1, 9600);
 
-  digitalWrite(ledPins[0], 1);
-  delay(500);
-  digitalWrite(ledPins[1], 1);
-  delay(300);
-  digitalWrite(ledPins[2], 1);
-  delay(500);
-  digitalWrite(ledPins[0], 0);
-  digitalWrite(ledPins[1], 0);
-  digitalWrite(ledPins[2], 0);
-  delay(500);
-  digitalWrite(ledPins[0], 1);
-  delay(250);
-  digitalWrite(ledPins[1], 1);
-  delay(100);
-  digitalWrite(ledPins[2], 1);
-  delay(500);
-  digitalWrite(ledPins[0], 0);
-  digitalWrite(ledPins[1], 0);
-  digitalWrite(ledPins[2], 0);
+  int x = 0;
+
+  while(x<25) {
+    init_leds();
+    x++;
+  }
 }
 
 void loop() {
@@ -73,4 +60,17 @@ void loop() {
   digitalWrite(ledPins[0], leds[0]);
   digitalWrite(ledPins[1], leds[1]);
   digitalWrite(ledPins[2], leds[2]);
+}
+
+void init_leds() {
+  int random_number = random(100);
+  digitalWrite(ledPins[0], 1);
+  delay(2*random_number);
+  digitalWrite(ledPins[1], 1);
+  delay(random_number);
+  digitalWrite(ledPins[2], 1);
+  delay(3*random_number);
+  digitalWrite(ledPins[0], 0);
+  digitalWrite(ledPins[1], 0);
+  digitalWrite(ledPins[2], 0);
 }
