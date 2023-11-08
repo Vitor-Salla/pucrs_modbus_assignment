@@ -37,6 +37,26 @@ void setup() {
   modbus.configureInputRegisters(potenciometros, 1); // potenciometro int
   modbus.configureHoldingRegisters(potenciometroUnion.uint16Value, 2); // potenciometro float
   modbus.begin(1, 9600);
+
+  digitalWrite(ledPins[0], 1);
+  delay(500);
+  digitalWrite(ledPins[1], 1);
+  delay(300);
+  digitalWrite(ledPins[2], 1);
+  delay(500);
+  digitalWrite(ledPins[0], 0);
+  digitalWrite(ledPins[1], 0);
+  digitalWrite(ledPins[2], 0);
+  delay(500);
+  digitalWrite(ledPins[0], 1);
+  delay(250);
+  digitalWrite(ledPins[1], 1);
+  delay(100);
+  digitalWrite(ledPins[2], 1);
+  delay(500);
+  digitalWrite(ledPins[0], 0);
+  digitalWrite(ledPins[1], 0);
+  digitalWrite(ledPins[2], 0);
 }
 
 void loop() {
