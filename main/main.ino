@@ -4,6 +4,7 @@
 const uint8_t ledPins[3] = {13, 12, 11}; // leds
 const uint8_t switchPins[3] = {4, 3, 2}; // dip switch
 const byte potenciometroPin = A0; // potênciometro
+const byte lm35Pin = A1;
 
 const uint8_t rxPin = 7;
 const uint8_t txPin = 5;
@@ -16,12 +17,12 @@ bool leds[3];
 bool switchs[3];
 uint16_t potenciometros[1];
 
-union PotenciometroUnion {
+union Lm35Union {
   float floatValue;
   uint16_t uint16Value[2];
 };
 
-PotenciometroUnion potenciometroUnion;
+Lm35Union lm35values;
 
 void setup() {
   pinMode(ledPins[0], OUTPUT);
@@ -35,7 +36,7 @@ void setup() {
   modbus.configureCoils(leds, 3);
   modbus.configureDiscreteInputs(switchs, 3);
   modbus.configureInputRegisters(potenciometros, 1); // potenciometro int
-  modbus.configureHoldingRegisters(potenciometroUnion.uint16Value, 2); // potenciometro float
+  modbus.configureHoldingRegisters(lm35values.uint16Value, 2); // potenciometro float
   modbus.begin(1, 9600);
 
   digitalWrite(ledPins[0], 1);
@@ -64,7 +65,8 @@ void loop() {
   switchs[1] = !digitalRead(switchPins[1]);
   switchs[2] = !digitalRead(switchPins[2]);
   potenciometros[0] = analogRead(potenciometroPin);
-  potenciometroUnion.floatValue = (5.0/1024.0)*potenciometros[0];
+  float lm35voltage = (analogRead(lm35Pin)/1024.0)*5.0;
+  lm35values.floatValue = lm35voltage/0.01;
 
   modbus.poll();
 
